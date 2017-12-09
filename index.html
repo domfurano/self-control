@@ -1,0 +1,46 @@
+<!doctype html>
+<html>
+
+<head>
+  <title>self control</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+  <script>
+    var app = angular.module('self-control', []);
+
+    app.controller('self-control-controller', function ($scope, $http) {
+      $scope.encrypt = function () {
+        $http.post('encrypt', $scope.input).success(
+          function (data, status) {
+            $scope.result = data;
+          }
+        ).error(function (data, status) {
+          console.log(data);
+        });
+      };
+      $scope.decrypt = function () {
+        $http.post('decrypt', $scope.input).success(
+          function (data, status) {
+            $scope.result = data;
+          }
+        ).error(function (data, status) {
+          console.log(data);
+        });
+      };
+    });
+  </script>
+</head>
+
+<body ng-app="self-control">
+
+  <div ng-controller="self-control-controller">
+    <p>Encrypt:
+      <input type="text" ng-model="input">
+    </p>
+    <button ng-click="encrypt()">Encrypt</button>    
+    <button ng-click="decrypt()">Decrypt</button>
+    <p>You wrote: {{ result }}</p>
+  </div>
+
+</body>
+
+</html>
